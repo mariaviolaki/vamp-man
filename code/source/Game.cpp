@@ -39,6 +39,9 @@ void Game::Init(std::string title, int width, int height, bool fullscreen)
     sRenderer = SDL_CreateRenderer(pWindow, -1, 0);
     // Start the game
     mIsRunning = true;
+
+    // Create instances on the heap
+    pPlayer = std::make_unique<Player>("../assets/vampire.png");
 }
 
 void Game::HandleInput()
@@ -49,14 +52,26 @@ void Game::HandleInput()
     {
         mIsRunning = false;
     }
+    else if (event.type == SDL_KEYDOWN || input == 0)
+    {
+        pPlayer->HandleInput(std::move(event));
+    }
 }
 
 void Game::Update()
-{}
+{
+    pPlayer->Update();
+}
 
 void Game::Render()
 {
+    // Prepare to render from scratch
     SDL_SetRenderDrawColor(sRenderer, 0, 0, 0, 255);
     SDL_RenderClear(sRenderer);
+
+    // Render changes to instances
+    pPlayer->Render();
+
+    // Render all the above
     SDL_RenderPresent(sRenderer);
 }

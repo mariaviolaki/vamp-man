@@ -1,8 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "../header/Player.h"
 #include "SDL2/SDL.h"
 #include <string>
+#include <memory>
 
 class Game
 {
@@ -20,6 +22,7 @@ public:
     void Update();
     void Render();
 
+    // Static variables of the class
     static const int sWindowWidth;
     static const int sWindowHeight;
     static SDL_Renderer* sRenderer;
@@ -27,6 +30,8 @@ public:
 private:
     SDL_Window* pWindow;
     bool mIsRunning;
+    // Unique pointers
+    std::unique_ptr<Player> pPlayer;
 };
 
 #endif // GAME_H
