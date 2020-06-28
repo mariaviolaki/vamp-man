@@ -3,9 +3,14 @@
 
 #include "../header/Map.h"
 #include "../header/Player.h"
+#include "../header/Garlic.h"
+#include "../header/MessageManager.h"
 #include "SDL2/SDL.h"
 #include <string>
 #include <memory>
+
+// Forward class declaration
+class MessageManager;
 
 class Game
 {
@@ -34,6 +39,10 @@ private:
     // Unique pointers
     std::unique_ptr<Map> pMap;
     std::unique_ptr<Player> pPlayer;
+    std::unique_ptr<Garlic> pGarlic1;
+    std::unique_ptr<Garlic> pGarlic2;
+    std::unique_ptr<Garlic> pGarlic3;
+    std::unique_ptr<MessageManager> pMessageManager;
 };
 
 #endif // GAME_H

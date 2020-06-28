@@ -43,6 +43,16 @@ void Game::Init(std::string title, int width, int height, bool fullscreen)
     // Create instances on the heap
     pMap = std::make_unique<Map>();
     pPlayer = std::make_unique<Player>("../assets/vampire.png");
+    pGarlic1 = std::make_unique<Garlic>("../assets/garlic.png", 
+        sWindowWidth - pMap->GetCellWidth(), 0);
+    pGarlic2 = std::make_unique<Garlic>("../assets/garlic.png", 
+        0, sWindowHeight - pMap->GetCellHeight());
+    pGarlic3 = std::make_unique<Garlic>("../assets/garlic.png", 
+        sWindowWidth - pMap->GetCellWidth(), sWindowHeight - pMap->GetCellHeight());
+    pMessageManager = std::make_unique<MessageManager>();
+
+    // Display starting message
+    pMessageManager->ShowMessage("gamestart");
 }
 
 void Game::HandleInput()
@@ -64,6 +74,9 @@ void Game::HandleInput()
 void Game::Update()
 {
     pPlayer->Update();
+    pGarlic1->Update();
+    pGarlic2->Update();
+    pGarlic3->Update();
 }
 
 void Game::Render()
@@ -75,6 +88,9 @@ void Game::Render()
     // Apply changes to instances
     pMap->Render();
     pPlayer->Render();
+    pGarlic1->Render();
+    pGarlic2->Render();
+    pGarlic3->Render();
 
     // Render all the above
     SDL_RenderPresent(sRenderer);
