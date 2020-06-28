@@ -72,7 +72,7 @@ void Game::Render()
     SDL_SetRenderDrawColor(sRenderer, 0, 0, 0, 255);
     SDL_RenderClear(sRenderer);
 
-    // Render changes to instances
+    // Apply changes to instances
     pMap->Render();
     pPlayer->Render();
 

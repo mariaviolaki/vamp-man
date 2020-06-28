@@ -46,12 +46,40 @@ void Player::HandleInput(SDL_Event&& event)
 }
 
 void Player::Update()
-{}
+{
+    MovePlayer();
+}
 
 void Player::Render()
 {
+    // Flip texture left and right according to player's direction
     if (mFlip)
         RenderManager::Draw(pTexture, mSrc, mDest, SDL_FLIP_HORIZONTAL);
     else
         RenderManager::Draw(pTexture, mSrc, mDest);
+}
+
+// Change player's coords unless there is collision with an obstacle
+void Player::MovePlayer()
+{
+    if (mDirection == Direction::Up)
+    {
+        mDest.y-=cVelocity;
+    }
+    else if (mDirection == Direction::Down)
+    {
+        mDest.y+=cVelocity;
+    }
+    else if (mDirection == Direction::Left)
+    {
+        mDest.x-=cVelocity;
+    }
+    else if (mDirection == Direction::Right)
+    {
+        mDest.x+=cVelocity;
+    }
+    else
+    {
+        mDirection = Direction::None;
+    }
 }

@@ -1,12 +1,12 @@
-#ifndef OBSTACLE_H
-#define OBSTACLE_H
+#ifndef BLOOD_H
+#define BLOOD_H
 
-class Obstacle
+class Blood
 {
 public:
     // Constructor / Destructor
-    Obstacle(int startX, int startY, int width, int height);
-    ~Obstacle();
+    Blood(int startX, int startY, int width, int height);
+    ~Blood();
 
     // Accessors / Mutators
     int GetX() const;
@@ -22,4 +22,4 @@ private:
     int mHeight;
 };
 
-#endif // OBSTACLE_H
+#endif // BLOOD_H

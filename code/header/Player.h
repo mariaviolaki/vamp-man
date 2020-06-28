@@ -14,6 +14,9 @@ public:
     void Render() override;
 
 private:
+    // Helper methods
+    void MovePlayer();
+
     const int cVelocity;
     Direction mDirection;
     // Toggle texture's direction horizontally

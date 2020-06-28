@@ -3,21 +3,22 @@
 
 int map[10][15] =
 {
-    { 0,0,1,0,0,0,0,0,0,0,0,0,1,0,0 },
-    { 0,0,1,0,0,1,1,1,1,1,0,0,1,0,0 },
-    { 0,1,1,0,0,0,0,0,0,0,0,0,1,1,0 },
-    { 0,0,0,0,1,1,1,0,1,1,1,0,0,0,0 },
-    { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-    { 1,1,1,1,1,0,0,0,0,0,1,1,1,1,1 },
-    { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-    { 0,1,1,0,0,0,0,0,0,0,0,0,1,1,0 },
-    { 0,1,0,0,1,1,1,1,1,1,1,0,0,1,0 },
-    { 0,1,0,0,0,0,0,0,0,0,0,0,0,1,0 },
+    { 0,0,1,2,2,2,2,2,2,2,2,2,1,2,2 },
+    { 0,0,1,2,2,1,1,1,1,1,2,2,1,2,2 },
+    { 2,1,1,2,2,2,2,2,2,2,2,2,1,1,2 },
+    { 2,2,2,2,1,1,1,2,1,1,1,2,2,2,2 },
+    { 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2 },
+    { 1,1,1,1,1,2,2,2,2,2,1,1,1,1,1 },
+    { 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2 },
+    { 2,1,1,2,2,2,2,2,2,2,2,2,1,1,2 },
+    { 2,1,2,2,1,1,1,1,1,1,1,2,2,1,2 },
+    { 2,1,2,2,2,2,2,2,2,2,2,2,2,1,2 },
 };
 
 Map::Map()
 : pFloor(RenderManager::LoadTexture("../assets/floor.png")),
-    pObstacle(RenderManager::LoadTexture("../assets/obstacle.png"))
+    pObstacle(RenderManager::LoadTexture("../assets/obstacle.png")),
+    pBlood(RenderManager::LoadTexture("../assets/blood.png"))
 {
     // Set width and height for both floor and obstacles
     SDL_QueryTexture(pFloor, NULL, NULL, &mSrc.w, &mSrc.h);
@@ -36,6 +37,7 @@ Map::~Map()
 {
     SDL_DestroyTexture(pFloor);
     SDL_DestroyTexture(pObstacle);
+    SDL_DestroyTexture(pBlood);
 }
 
 int Map::GetCellWidth() const { return mDest.w; }
@@ -56,6 +58,10 @@ void Map::LoadMap()
             else if (map[row][column] == 1)
             {
                 mMap[row][column] = TileType::Obstacle;
+            }
+            else if (map[row][column] == 2)
+            {
+                mMap[row][column] = TileType::Blood;
             }
         }
     }
@@ -81,6 +87,11 @@ void Map::Render()
             else if (mMap[row][column] == TileType::Obstacle)
             {
                 RenderManager::Draw(pObstacle, mSrc, mDest);
+            }
+            else if (mMap[row][column] == TileType::Blood)
+            {
+                RenderManager::Draw(pFloor, mSrc, mDest);
+                RenderManager::Draw(pBlood, mSrc, mDest);
             }
         }
     }
