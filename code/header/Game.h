@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "../header/Map.h"
 #include "../header/Player.h"
 #include "SDL2/SDL.h"
 #include <string>
@@ -31,6 +32,7 @@ private:
     SDL_Window* pWindow;
     bool mIsRunning;
     // Unique pointers
+    std::unique_ptr<Map> pMap;
     std::unique_ptr<Player> pPlayer;
 };
 

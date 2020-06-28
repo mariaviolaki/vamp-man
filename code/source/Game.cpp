@@ -41,6 +41,7 @@ void Game::Init(std::string title, int width, int height, bool fullscreen)
     mIsRunning = true;
 
     // Create instances on the heap
+    pMap = std::make_unique<Map>();
     pPlayer = std::make_unique<Player>("../assets/vampire.png");
 }
 
@@ -48,10 +49,12 @@ void Game::HandleInput()
 {
     SDL_Event event;
     int input = SDL_PollEvent(&event);
+    // Check if the user quits the program
     if (event.type == SDL_QUIT)
     {
         mIsRunning = false;
     }
+    // Player handles the keyboard and the absence of new events
     else if (event.type == SDL_KEYDOWN || input == 0)
     {
         pPlayer->HandleInput(std::move(event));
@@ -70,6 +73,7 @@ void Game::Render()
     SDL_RenderClear(sRenderer);
 
     // Render changes to instances
+    pMap->Render();
     pPlayer->Render();
 
     // Render all the above
