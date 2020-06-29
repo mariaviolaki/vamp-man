@@ -31,6 +31,6 @@ void MessageManager::ShowMessage(std::string imageName)
     RenderManager::Draw(pTexture, mSrc, mDest);
     SDL_RenderPresent(Game::sRenderer);
 
-    // Show message image for 1 second
-    SDL_Delay(1000);
+    // Show message image for 1.5 seconds
+    SDL_Delay(1500);
 }

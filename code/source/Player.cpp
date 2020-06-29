@@ -1,7 +1,6 @@
 #include "../header/Player.h"
 #include "../header/Character.h"
 #include "../header/RenderManager.h"
-#include <iostream>
 
 Player::Player(std::string imagePath)
 : Character(imagePath),
@@ -48,10 +47,8 @@ void Player::HandleInput(SDL_Event&& event)
 
 void Player::Update()
 {
-    MovePlayer();
-    if (CollisionManager::ObstacleCollision(mDest.x, mDest.y, mDest.x + mDest.w, mDest.y + mDest.h))
-        std::cout << "obstacle collision" << std::endl;
-    CollisionManager::BloodCollision(mDest.x, mDest.y, mDest.x + mDest.w, mDest.y + mDest.h);
+    AvoidObstacles();
+    DrinkBlood();
 }
 
 void Player::Render()
@@ -64,21 +61,25 @@ void Player::Render()
 }
 
 // Change player's coords unless there is collision with an obstacle
-void Player::MovePlayer()
+void Player::AvoidObstacles()
 {
-    if (mDirection == Direction::Up)
+    if (mDirection == Direction::Up && !(CollisionManager::ObstacleCollision(
+        mDest.x, mDest.y - cVelocity, mDest.x + mDest.w, mDest.y + mDest.h - cVelocity)))
     {
         mDest.y-=cVelocity;
     }
-    else if (mDirection == Direction::Down)
+    else if (mDirection == Direction::Down && !(CollisionManager::ObstacleCollision(
+        mDest.x, mDest.y + cVelocity, mDest.x + mDest.w, mDest.y + mDest.h + cVelocity)))
     {
         mDest.y+=cVelocity;
     }
-    else if (mDirection == Direction::Left)
+    else if (mDirection == Direction::Left && !(CollisionManager::ObstacleCollision(
+        mDest.x - cVelocity, mDest.y, mDest.x + mDest.w - cVelocity, mDest.y + mDest.h)))
     {
         mDest.x-=cVelocity;
     }
-    else if (mDirection == Direction::Right)
+    else if (mDirection == Direction::Right && !(CollisionManager::ObstacleCollision(
+        mDest.x + cVelocity, mDest.y, mDest.x + mDest.w + cVelocity, mDest.y + mDest.h)))
     {
         mDest.x+=cVelocity;
     }
@@ -86,4 +87,10 @@ void Player::MovePlayer()
     {
         mDirection = Direction::None;
     }
+}
+
+void Player::DrinkBlood()
+{
+    CollisionManager::BloodCollision(
+        mDest.x - cVelocity, mDest.y, mDest.x + mDest.w - cVelocity, mDest.y + mDest.h);
 }

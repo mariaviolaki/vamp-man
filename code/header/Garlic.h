@@ -4,6 +4,7 @@
 #include "../header/Character.h"
 #include <random>
 
+// Use public inheritance so that parent's members remain visible
 class Garlic : public Character
 {
 public:
@@ -19,7 +20,7 @@ public:
 private:
     // Helper methods
     void ChooseDirection();
-    bool KeepMoving();
+    bool AvoidObstacles();
 
     const int cMinSteps;
     std::mt19937 mRng;

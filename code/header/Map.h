@@ -20,6 +20,7 @@ public:
     // Getters / Setters
     int GetCellWidth() const;
     int GetCellHeight() const;
+    int GetBloodLeft() const; // if 0, the player won the game
     void SetMapCell(TileType tileType, int row, int column);
 
     // Move obstacles and blood to CollisionManager
@@ -39,6 +40,7 @@ private:
     SDL_Texture* pBlood;
     SDL_Rect mSrc;
     SDL_Rect mDest;
+    int mBloodDrops;
     // Store obstacles and blood drops loaded on the map
     std::vector<std::unique_ptr<Obstacle>> mObstacles;
     std::vector<std::unique_ptr<Blood>> mBloods;

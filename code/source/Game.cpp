@@ -1,5 +1,4 @@
 #include "../header/Game.h"
-#include <iostream>
 
 // Initialization of static variables
 const int Game::sWindowWidth = 960;
@@ -60,6 +59,7 @@ void Game::Init(std::string title, int width, int height, bool fullscreen)
 void Game::HandleInput()
 {
     SDL_Event event;
+    // Get last input from the user
     int input = SDL_PollEvent(&event);
     // Check if the user quits the program
     if (event.type == SDL_QUIT)
@@ -79,11 +79,13 @@ void Game::Update()
     pGarlic1->Update();
     pGarlic2->Update();
     pGarlic3->Update();
+
+    // Stop running the game if the player collided with a garlic
     if (pCollisionManager->GarlicCollision(pPlayer.get(), pGarlic1.get())
         || pCollisionManager->GarlicCollision(pPlayer.get(), pGarlic2.get())
         || pCollisionManager->GarlicCollision(pPlayer.get(), pGarlic3.get()))
     {
-        std::cout << "garlic collision" << std::endl;
+        mIsRunning = false;
     }
 }
 
@@ -102,4 +104,16 @@ void Game::Render()
 
     // Render all the above
     SDL_RenderPresent(sRenderer);
+
+    // End game if the player reached all blood drops
+    if (pMap->GetBloodLeft() == 0)
+    {
+        mIsRunning = false;
+        pMessageManager->ShowMessage("youwin");
+    }
+    // Exit game if the game was set to stop running
+    else if (!mIsRunning)
+    {
+        pMessageManager->ShowMessage("gameover");
+    }
 }

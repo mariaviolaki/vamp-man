@@ -15,7 +15,8 @@ public:
 
 private:
     // Helper methods
-    void MovePlayer();
+    void AvoidObstacles();
+    void DrinkBlood();
 
     const int cVelocity;
     Direction mDirection;

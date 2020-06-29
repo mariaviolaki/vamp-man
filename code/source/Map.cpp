@@ -43,6 +43,7 @@ Map::~Map()
 
 int Map::GetCellWidth() const { return mDest.w; }
 int Map::GetCellHeight() const { return mDest.h; }
+int Map::GetBloodLeft() const { return mBloodDrops; }
 
 // Change the value of a map cell
 void Map::SetMapCell(TileType tileType, int row, int column)
@@ -92,6 +93,8 @@ std::vector<std::unique_ptr<Blood>> Map::GetBloods()
 
 void Map::Render()
 {
+    mBloodDrops = 0;
+
     // Iterate through the rows of the 2D map 
     for (int row = 0; row < 10; ++row)
     {
@@ -115,6 +118,7 @@ void Map::Render()
             {
                 RenderManager::Draw(pFloor, mSrc, mDest);
                 RenderManager::Draw(pBlood, mSrc, mDest);
+                mBloodDrops++;
             }
         }
     }

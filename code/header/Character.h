@@ -17,9 +17,11 @@ public:
     int GetWidth() const;
     int GetHeight() const;
 
+    // Pure virtual functions to be overridden by children
     virtual void Update() = 0;
     virtual void Render() = 0;
 
+// Member variables will be visible to derived classes
 protected:
     SDL_Texture* pTexture;
     SDL_Rect mSrc;

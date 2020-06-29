@@ -29,7 +29,7 @@ void Garlic::Update()
     {
         ChooseDirection();
     }
-    while (!KeepMoving());
+    while (!AvoidObstacles());
 }
 
 void Garlic::Render()
@@ -64,8 +64,8 @@ void Garlic::ChooseDirection()
     }
 }
 
-// Control garlic's movement on the map
-bool Garlic::KeepMoving()
+// Change Garlic's coords unless there is collision with an obstacle
+bool Garlic::AvoidObstacles()
 {
     mChangeDirection = false;
     // Check if garlic has made too many steps
@@ -84,30 +84,38 @@ bool Garlic::KeepMoving()
         }
     }
 
-    // Move according to the current direction
-    if (mDirection == Direction::Up)
+    // Move according to the current direction and avoid obstacles
+    if (mDirection == Direction::Up && !(CollisionManager::ObstacleCollision(
+        mDest.x, mDest.y - cVelocity, mDest.x + mDest.w, mDest.y + mDest.h - cVelocity)))
     {
         mDest.y-=cVelocity;
         mSteps++;
         return true;
     }
-    else if (mDirection == Direction::Down)
+    else if (mDirection == Direction::Down && !(CollisionManager::ObstacleCollision(
+        mDest.x, mDest.y + cVelocity, mDest.x + mDest.w, mDest.y + mDest.h + cVelocity)))
     {
         mDest.y+=cVelocity;
         mSteps++;
         return true;
     }
-    else if (mDirection == Direction::Left)
+    else if (mDirection == Direction::Left && !(CollisionManager::ObstacleCollision(
+        mDest.x - cVelocity, mDest.y, mDest.x + mDest.w - cVelocity, mDest.y + mDest.h)))
     {
         mDest.x-=cVelocity;
         mSteps++;
         return true;
     }
-    else if (mDirection == Direction::Right)
+    else if (mDirection == Direction::Right && !(CollisionManager::ObstacleCollision(
+        mDest.x + cVelocity, mDest.y, mDest.x + mDest.w + cVelocity, mDest.y + mDest.h)))
     {
         mDest.x+=cVelocity;
         mSteps++;
         return true;
     }
+
+    mChangeDirection = true;
+    mSteps = 0;
+
     return false;
 }

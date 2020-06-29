@@ -2,7 +2,6 @@
 #include "../header/Game.h"
 #include <memory>
 #include <algorithm>
-#include <iostream>
 
 // Initialization of static variables
 std::vector<std::unique_ptr<Obstacle>> CollisionManager::mObstacles = {};
@@ -61,9 +60,6 @@ void CollisionManager::BloodCollision(int startX, int startY, int endX, int endY
             pMap->SetMapCell(TileType::Floor, blood->GetRow(), blood->GetColumn());
             // Remove blood instance from the vector
             mBloods.erase(std::find(mBloods.begin(), mBloods.end(), blood));
-
-            std::cout << "blood collision" << std::endl;
-
             break;
         }
     }   
