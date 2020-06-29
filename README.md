@@ -1,5 +1,7 @@
 # Vamp-Man
 
+<img src="assets/game.jpg"/>
+
 This small 2D arcade game, made with C++ and SDL2, is the Capstone Project for Udacity's [C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).
 
 The user plays as a vampire whose goal is to get to every blood drop without hitting a garlic. The arrows on the keyboard are used to move the player around the maze. Depending whether the user reached their goal or not, a "You Win!" or "Game Over!" message appears on the screen before the game exits.
@@ -8,7 +10,7 @@ The user plays as a vampire whose goal is to get to every blood drop without hit
 
 * cmake >= 3.13:
     * [Instructions by CMake](https://cmake.org/install/)
-* make >= 4.1 (for Linux & Mac), 3.81 (for Windows)
+* make >= 4.1 (for Linux & Mac), 3.81 (for Windows):
     * For Linux users, make is often installed by default
     * For Windows, [visit GnuWin32 for instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
     * For Mac, [install Xcode command line tools](https://developer.apple.com/xcode/features/)
