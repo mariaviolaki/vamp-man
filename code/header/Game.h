@@ -5,6 +5,7 @@
 #include "../header/Player.h"
 #include "../header/Garlic.h"
 #include "../header/MessageManager.h"
+#include "../header/CollisionManager.h"
 #include "SDL2/SDL.h"
 #include <string>
 #include <memory>
@@ -42,6 +43,7 @@ private:
     std::unique_ptr<Garlic> pGarlic1;
     std::unique_ptr<Garlic> pGarlic2;
     std::unique_ptr<Garlic> pGarlic3;
+    std::unique_ptr<CollisionManager> pCollisionManager;
     std::unique_ptr<MessageManager> pMessageManager;
 };
 

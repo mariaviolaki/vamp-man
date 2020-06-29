@@ -1,6 +1,7 @@
 #include "../header/Player.h"
 #include "../header/Character.h"
 #include "../header/RenderManager.h"
+#include <iostream>
 
 Player::Player(std::string imagePath)
 : Character(imagePath),
@@ -48,6 +49,9 @@ void Player::HandleInput(SDL_Event&& event)
 void Player::Update()
 {
     MovePlayer();
+    if (CollisionManager::ObstacleCollision(mDest.x, mDest.y, mDest.x + mDest.w, mDest.y + mDest.h))
+        std::cout << "obstacle collision" << std::endl;
+    CollisionManager::BloodCollision(mDest.x, mDest.y, mDest.x + mDest.w, mDest.y + mDest.h);
 }
 
 void Player::Render()

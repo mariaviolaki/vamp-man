@@ -1,4 +1,5 @@
 #include "../header/Game.h"
+#include <iostream>
 
 // Initialization of static variables
 const int Game::sWindowWidth = 960;
@@ -49,6 +50,7 @@ void Game::Init(std::string title, int width, int height, bool fullscreen)
         0, sWindowHeight - pMap->GetCellHeight());
     pGarlic3 = std::make_unique<Garlic>("../assets/garlic.png", 
         sWindowWidth - pMap->GetCellWidth(), sWindowHeight - pMap->GetCellHeight());
+    pCollisionManager = std::make_unique<CollisionManager>(pMap.get());
     pMessageManager = std::make_unique<MessageManager>();
 
     // Display starting message
@@ -77,6 +79,12 @@ void Game::Update()
     pGarlic1->Update();
     pGarlic2->Update();
     pGarlic3->Update();
+    if (pCollisionManager->GarlicCollision(pPlayer.get(), pGarlic1.get())
+        || pCollisionManager->GarlicCollision(pPlayer.get(), pGarlic2.get())
+        || pCollisionManager->GarlicCollision(pPlayer.get(), pGarlic3.get()))
+    {
+        std::cout << "garlic collision" << std::endl;
+    }
 }
 
 void Game::Render()

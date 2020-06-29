@@ -1,5 +1,6 @@
 #include "../header/Map.h"
 #include "../header/RenderManager.h"
+#include "../header/CollisionManager.h"
 
 int map[10][15] =
 {
@@ -43,6 +44,12 @@ Map::~Map()
 int Map::GetCellWidth() const { return mDest.w; }
 int Map::GetCellHeight() const { return mDest.h; }
 
+// Change the value of a map cell
+void Map::SetMapCell(TileType tileType, int row, int column)
+{
+    mMap[row][column] = tileType;
+}
+
 void Map::LoadMap()
 {
     // Iterate through the rows of the 2D map 
@@ -58,13 +65,29 @@ void Map::LoadMap()
             else if (map[row][column] == 1)
             {
                 mMap[row][column] = TileType::Obstacle;
+                // Create an obstacle and store it in the vector
+                mObstacles.emplace_back(std::make_unique<Obstacle>(
+                    mDest.w * column + 5, mDest.h * row + 5, mDest.w - 5, mDest.h - 5));
             }
             else if (map[row][column] == 2)
             {
                 mMap[row][column] = TileType::Blood;
+                // Create a blood object and store it in the vector
+                mBloods.emplace_back(std::make_unique<Blood>(
+                    row, column, mDest.w * column, mDest.h * row, mDest.w, mDest.h));
             }
         }
     }
+}
+
+// Move vectors to CollisionManager
+std::vector<std::unique_ptr<Obstacle>> Map::GetObstacles()
+{
+    return std::move(mObstacles);
+}
+std::vector<std::unique_ptr<Blood>> Map::GetBloods()
+{
+    return std::move(mBloods);
 }
 
 void Map::Render()
